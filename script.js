@@ -430,8 +430,92 @@ let arr2 = [12, 5, -5, 0, 4];
 const printForcast = function (arr) {
     let str = '';
     for (let i = 0; i < arr.length; i++) {
-        str = str + `...${arr[i]}C in ${i+1} days `
+        str = str + `...${arr[i]}C in ${i + 1} days `
     }
-    console.log(str+'...');
+    console.log(str + '...');
 }
 printForcast(arr1);
+
+//Destructuring arrays.
+const restaurant = {
+    restroName: 'Classico Italino',
+    location: 'Via Angelo ,Frenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Garlic Bread', 'Soups', 'Caprese Salad'],
+    mainMenu: ['Paneer', 'Pasta', 'Pizza'],
+    openingHours: {
+        thursday: {
+            open: 12,
+            close: 22,
+        },
+        friday: {
+            open: 11,
+            close: 23,
+        },
+        saturday: {
+            open: 0,
+            close: 24
+        },
+    },
+
+    order: function (starterindex, mainindex) {
+        return [this.starterMenu[starterindex], this.mainMenu[mainindex]]
+    }
+};
+
+//---------------------------------------------
+const arr = [2, 3, 4];
+const a = arr[0];
+const b = arr[1];
+const c = arr[2];
+
+const [x, y, z] = arr;
+console.log(x, y, z);
+console.log(arr);
+
+//-------------------------------
+let [first, , second] = restaurant.categories;//skip theelement which we dont wwant  bby keeping it blank.
+console.log(first, second);
+
+// const temp=first;
+// first=second;
+// second=temp;
+// console.log(first,second) ;
+
+[first, second] = [second, first]
+console.log(first, second);
+
+//------------------------------
+const [starter, main] = restaurant.order(2, 0);
+console.log(starter, main);
+
+//----------------------------------
+const nested = [2, 4, [5, 6]];
+// const [i, , j] = nested;//returns [5,6]
+// console.log(i, j);
+
+const [i, , [j, k]] = nested;//returns 2 5 6
+console.log(i, j, k);
+
+//----------------------------------
+const [p = 1, q = 1, r = 1] = [8, 9];
+console.log(p, q, r);
+
+//--------------------------------------------
+const { restroName, openingHours, categories } = restaurant;
+console.log(restroName, openingHours, categories);
+
+const { restroName: restaurantName, openingHours: hours, categories: tags } = restaurant;
+console.log(restaurantName, hours, tags);
+
+//--------Default Values----------------
+const { menu = [], starterMenu: starters = [] } = restaurant
+console.log(menu, starters);
+
+//----------Mutating Variables----------------
+// let s = 111;
+// let t = 999;
+// let obj = { s: 23, t: 7, u: 14 }
+
+// ({s,t}=obj);
+// console.log(s,t);
