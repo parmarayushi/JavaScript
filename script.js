@@ -787,3 +787,368 @@ for (const [key, { open, close }] of entries) {
 }
 
 // ## Coding Challenge 12.
+for (const [i, player] of game.scored.entries()) {
+    console.log(`Goal ${i + 1}:${player}`);
+}
+
+//-----------------------
+const odds = Object.values(game.odds)
+let average = 0;
+for (const odd of odds) {
+    average += odd;
+}
+average /= odds.length;
+console.log(average);
+
+//---------------------
+for (const [team, odd] of Object.entries(game.odds)) {
+    const teamStr = team === 'x' ? 'draw' : `victory${game[team]}`;
+    console.log(`Odd of ${teamStr} ${odd}`);
+}
+
+//----------------Sets---------
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risoto', 'Pasta', 'Pizza']);
+console.log(ordersSet);
+console.log(new Set('Jonas'));
+console.log(ordersSet.size);
+console.log(ordersSet.has('Bread'));
+console.log(ordersSet.has('Pizza'));
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+ordersSet.delete('Risoto');
+// ordersSet.clear();//to empty the set
+console.log(ordersSet);
+
+for (const order of ordersSet) console.log(order);
+
+//---------------
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+const staffUnique = [...new Set(staff)]
+console.log(staffUnique);
+
+console.log(new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size);
+console.log(new Set('JonasSchimedtman').size);
+
+//-------------Maps-------------
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze', 'Italy');
+console.log(rest.set(2, 'Lisbon', 'Portugal'));
+rest.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic']).set('open', 11).set('close', 23).set(true, 'We are open').set(false, 'We are closed');
+console.log(rest.get('name'));
+console.log(rest.get(true));
+console.log(rest.get(1));
+
+const time = 8;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('categories'));
+rest.delete(2);
+// rest.clear();
+
+const arr5 = [1, 2];
+rest.set(arr5, 'Test')
+rest.set(document.querySelector('h1'), 'Heading')
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest.get(arr5));
+
+//------------Maps:Iteration------------
+const question = new Map([
+    ['question', 'What is the best programming language in the world ?'],
+    [1, 'C'],
+    [2, 'Java'],
+    [3, 'JavaScript'],
+    ['correct', 3],
+    [true, 'Correct'],
+    [false, 'Try Again']
+]);
+console.log(question);
+//Convert object to map
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+//Quiz app
+console.log(question.get('question'));
+for (const [key, value] of question) {
+    if (typeof key === 'number')
+        console.log(`Answer ${key}:${value}`);
+}
+// const answer=Number(prompt('Your Answer'));
+// console.log(answer);
+
+// console.log(question.get(question.get('correct')===answer));
+
+//convert map to array
+console.log([...question]);
+// console.log([...question.key()]);
+// console.log([...question.values()]);
+
+// ## Coding Challenge 13.
+const gameEvents = new Map([
+    [17, 'Goal'],
+    [36, 'Substitution'],
+    [47, 'Goal'],
+    [61, 'Substitution'],
+    [64, 'Yellow Card'],
+    [69, 'Red Card'],
+    [70, 'Substitution'],
+    [72, 'Substitution'],
+    [76, 'Goal'],
+    [80, 'Goal'],
+    [92, 'Yellow Card']
+]);
+
+console.log(gameEvents.values());
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+gameEvents.delete(64);
+
+console.log(`An event happened, on average,every ${90 / gameEvents.size} minutes`);
+
+const tiMe = [...gameEvents.keys()].pop();
+console.log(tiMe);
+console.log(`An event happened, on average,every ${tiMe / gameEvents.size} minutes`);
+
+for (const [key, value] of gameEvents) {
+    const half = key <= 45 ? 'First' : 'Second';
+    console.log(`[${half} Half] ${key} : ${value}`);
+}
+
+//-------------Working with strings------
+//---------------Slice,length,indexof,lastindexof----------
+const airline = 'Tap Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal'));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(0, airline.indexOf(' ')));;
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+    //B and E are middle seats.
+    const s = seat.slice(-1);
+    if (s === 'B' || s === 'E') {
+
+        console.log(`You got the middle seat`);
+    } else {
+        console.log('You are lucky');
+    }
+}
+checkMiddleSeat('11B')
+checkMiddleSeat('23C')
+checkMiddleSeat('3E')
+
+//--------------uppercase and lowercase---------
+console.log(typeof new String('jonas'));
+console.log(typeof new String('jonas').slice());
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+//fix capitalizzaion in name
+const passenger = 'jOnAs';
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+//comparing email
+const email = 'hello@gmail.com';
+const loginEmail = ' Hello@Gmail.com \n';
+
+// const lowerEmail=loginEmail.toLowerCase();
+// const trimmedEmail=loginEmail.trim();
+// console.log(trimmedEmail);
+const normalizeEmail = loginEmail.toLowerCase().trim();
+console.log(normalizeEmail);
+console.log(email === normalizeEmail);
+
+//-----------replacing-------------
+const price = '288,97pound';
+const priceUs = price.replace('pound', '$').replace(',', '.');
+console.log(priceUs);
+
+const announcement = 'All passengers come to boarding door 23, Boarding door 23!';
+console.log(announcement.replace('door', 'gate'));
+console.log(announcement.replaceAll('door', 'gate'));
+console.log(announcement.replace(/door/g, 'gate'));//using regular expression.
+
+//booleans
+const planE = 'Airbus A320neo';
+console.log(planE.includes('A320'));
+console.log(planE.includes('Boing'));
+console.log(planE.startsWith('Airb'));
+
+if (planE.startsWith('Airbus') && planE.endsWith('neo')) {
+    console.log('Part of new airbus family');
+}
+
+//-----------------------
+const checkBaggage = function (items) {
+    const baggage = items.toLowerCase();
+    if (baggage.includes('knife') || baggage.includes('gun')) {
+        console.log('You are not allowed on Board');
+    } else {
+        console.log('You are allowed on Board');
+    }
+}
+checkBaggage('I have laptop, some food nd pocketKnife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for my protection');
+
+//---------Join and Split------------
+console.log('a+very+nice+string'.split('+'));
+
+const [firstame, lastName] = 'Jonas Schmedtmaan'.split(' ');
+const fullName = ['Ms.', firstame, lastName.toUpperCase()].join(' ');
+console.log(fullName);
+
+//----------------------
+const capitalizeName = function (name) {
+    const names = name.split(' ');
+    const namesUpper = [];
+    for (const n of names) {
+        // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+        namesUpper.push(n.replace(n[0], n[0].toUpperCase()))
+    }
+    console.log(namesUpper.join(' '));
+}
+capitalizeName('jessica and smith devis');
+capitalizeName('jonas schmedtmaan');
+
+//------------Padding a string--------------
+const message = 'Go to gate 23';
+console.log(message.padStart(23, '-').padEnd(35, '-'));
+console.log('Jonas'.padStart(10, '-'));
+
+//-------------------------
+const maskCreditCard = function (number) {
+    const str = number + '';
+    const last = str.slice(-4);
+    return last.padStart(str.length, '*')
+}
+
+console.log(maskCreditCard(537625432874582346));
+console.log(maskCreditCard(3456243523));
+console.log(maskCreditCard('343648764786846'));
+
+//-----------repeat-------
+const msg = 'bad weather...all departures delayed... ';
+console.log(msg.repeat(5));
+
+const planesInLine = function (n) {
+    console.log(`There are ${n} planes in line ${'&'.repeat(n)}`);
+}
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+
+//--------Functions---------
+const bookings = [];
+const createBooking = function (flightNum, numPassengers = 1, price = 199 * numPassengers) {
+    //ES5
+    // numPassengers = numPassengers || 1;
+    // price = price || 199;
+    const booking = {
+        flightNum,
+        numPassengers,
+        price,
+    };
+    console.log(booking);
+    bookings.push(booking);
+};
+createBooking('LH123');
+createBooking('LH123', 2, 800);
+createBooking('LH123', 2);
+createBooking('LH123', undefined, 1000);
+
+//-----Passing arguments :values vs. reference-----------
+const flight = 'LH234';
+const jonAs = {
+    fullName: 'Jonas schmedthman',
+    passport: 1234567890,
+}
+const checkIn = function (flightNum, passenger) {
+    flightNum = 'LH999';
+    passenger.fullName = 'Mr.' + passenger.fullName;
+    // if (passenger.passport === 1234567890) {
+    //     alert('Checked In')
+    // } else {
+    //     alert('Wrong passport')
+    // }
+}
+// checkIn(flight, jonAs);
+// console.log(flight);
+// console.log(jonAs);
+
+// const flightNum=flight;
+// const passengeR=jonAs;
+
+const newPassport = function (person) {
+    person.passport = Math.trunc(Math.random() + 10000000000);
+}
+newPassport(jonAs);
+checkIn(flight, jonAs);
+
+//------------------------------
+const oneWord = function (str) {
+    return str.replace(/ /g, '').toLowerCase();
+}
+const upperFirstWord = function (str) {
+    const [first, ...others] = str.split(' ');
+    return [first.toUpperCase(), ...others].join(' ');
+};
+
+//-------------higher order function--------------
+const transformer = function (str, fn) {
+    console.log(`Original string: ${str}`);
+    console.log(`Transformed string: ${str}`);
+    // console.log(`Transformed string:${fn(str)}`);
+    console.log(`Transformed by: ${fn.name}`);
+}
+transformer('Javascript is the best!', upperFirstWord);
+// transformer('Javascript is the best!',oneWord);
+
+//--------JS uses callback all the time----------
+const high5 = function () {
+    console.log('hello');
+}
+document.body.addEventListener('click', high5);
+['Jonas', 'Martha', 'Adan'].forEach(high5);
+
+//-------------Functions returning functions-----------
+const greet = function (greeting) {
+    return function (name) {
+        console.log(`${greeting} ${name}`);
+    }
+}
+const greetHey = greet('Hello');
+greetHey('Jonas');
+greetHey('Steven');
+
+greet('Hey')('Jonas');
+
+const greetArr=greeting=>name=> console.log(`${greeting} ${name}`);
+greet('Hi')('Jonas');
