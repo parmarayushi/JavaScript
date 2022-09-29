@@ -1132,11 +1132,11 @@ transformer('Javascript is the best!', upperFirstWord);
 // transformer('Javascript is the best!',oneWord);
 
 //--------JS uses callback all the time----------
-const high5 = function () {
-    console.log('hello');
-}
-document.body.addEventListener('click', high5);
-['Jonas', 'Martha', 'Adan'].forEach(high5);
+// const high5 = function () {
+//     console.log('hello');
+// }
+// document.body.addEventListener('click', high5);
+// ['Jonas', 'Martha', 'Adan'].forEach(high5);
 
 //-------------Functions returning functions-----------
 const greet = function (greeting) {
@@ -1150,5 +1150,199 @@ greetHey('Steven');
 
 greet('Hey')('Jonas');
 
-const greetArr=greeting=>name=> console.log(`${greeting} ${name}`);
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greet('Hi')('Jonas');
+
+//---------------The call and apply method---------
+const lufthansa = {
+    airline: 'Luthansa',
+    iataCode: 'LH',
+    bookings: [],
+    book(flightNum, name) {
+        console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+        this.bookings.push({ flight: `${this.airline}${this.flightNum}`, name })
+    }
+};
+lufthansa.book(239, 'Jonas Schmedthmann');
+lufthansa.book(635, 'John Smith');
+
+const eurowings = {
+    airline: 'Eurowings',
+    iataCode: 'EW',
+    bookings: [],
+};
+const book = lufthansa.book;
+// book(23, 'Sarah william');//does not work
+book.call(eurowings, 23, 'Sarah Williams');
+console.log(eurowings);
+
+book.call(lufthansa, 239, 'Marry Cooper');
+console.log(lufthansa);
+
+const swiss = {
+    airline: 'Swiss airline',
+    iataCode: 'LX',
+    bookings: [],
+}
+
+book.call(swiss, 533, 'Marry Cooper');
+console.log(swiss);
+
+// //apply method
+const flightData = [583, 'George Cooper'];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+book.call(swiss, ...flightData);
+
+//----------Bind Method-----------
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+bookEW(23, 'Steven William');
+
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('Jonas Schmedthman');
+bookEW23('Martha Cooper');
+
+//with event listners
+lufthansa.plane = 300;
+lufthansa.buyPlane = function () {
+    console.log(this);
+
+    this.plane++;
+    console.log(this.plane);
+}
+
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+//-------------------
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+const addVat = addTax.bind(null, 0.23);
+// addVat=value=>value+value*0.23;
+
+console.log(addVat(100));
+console.log(addVat(23));
+
+//---------another way to do the same--------
+const addTaxRate = function (rate) {
+    return function (value) {
+        return value + value * rate;
+    };
+};
+const addVat2 = addTaxRate(0.23);
+console.log(addVat2(100));
+console.log(addVat2(23));
+
+// ## Coding Challenge 14.
+const poll = {
+    question: 'What is your favourite programming language?',
+    options: ['0:JavaScript', '1:Python', '2:Rust', '3:C++'],
+    answers: new Array(4).fill(0),//this generates [0,0,0,0],
+    registerNewAnswer() {
+        const answer = Number(prompt(`${this.question}\n${this.options.join('\n')}\n(Write option number)`));
+        console.log(answer);
+
+        //REGISTER ANSWER
+        typeof answer === 'number' && answer < this.answers.length && this.answers[answer]++;
+        this.displayResult();
+        this.displayResult('string');
+    },
+    displayResult(type = 'array') {
+        if (type === 'array') {
+            console.log(this.answers);
+        } else if (type === 'string') {
+            console.log(`Poll result are ${this.answers.join(', ')}`);
+        }
+    }
+};
+document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+poll.displayResult.call({ answers: [5, 2, 3] }, 'string');
+poll.displayResult.call({ answers: [1, 5, 3, 9, 6, 1] });
+
+//-----------immediately invoked function expression(IIFE)--------
+const runOnce = function () {
+    console.log('This will never run again');
+}
+runOnce();
+
+(function () {
+    console.log('This will never run again');
+    const isPrivate = 23;
+})();
+
+// console.log(isPrivate);
+
+(() => console.log('This will also never run again'))();
+{
+    const isPrivate = 23;
+    var notPrivate = 46;
+}
+// console.log(isPrivate);
+console.log(notPrivate);
+
+//-----------Closures------------
+const secureBooking = function () {
+    let passengerCount = 0;
+
+    return function () {
+        passengerCount++;
+        console.log(`${passengerCount} passengers`);
+    }
+}
+const booker = secureBooking();
+booker();
+booker();
+booker();
+
+//--------------------
+let f;
+const g = function () {
+    const a = 23;
+    f = function () {
+        console.log(a * 2);;
+    }
+}
+
+const h = function () {
+    const b = 222;
+    f = function () {
+        console.log(b * 2);
+    }
+}
+
+g();
+f();
+//resassigning f function.
+h();
+f();
+
+const boardPassengers = function (n, wait) {
+    const perGroup = n / 3;
+
+    setTimeout(function () {
+        console.log(`We are now boarding at ${n} passengers`);
+        console.log(`There are 3 groups,each with ${perGroup} passengers`);
+    }, wait * 1000);
+    console.log(`Will start boarding at ${wait} seconds`);
+}
+setTimeout(function () {
+    console.log('timer');
+}, 1000);
+
+boardPassengers(180, 3);
+
+// ## Coding Challenge 15.
+(function () {
+    const header = document.querySelector('h1');
+    header.style.color = 'red';
+
+    document.querySelector('body').addEventListener('click', function () {
+        header.style.color = 'blue';
+    });
+})();
+
+//--------Simple array methods--------
