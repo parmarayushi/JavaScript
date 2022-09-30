@@ -829,7 +829,7 @@ console.log(staffUnique);
 console.log(new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size);
 console.log(new Set('JonasSchimedtman').size);
 
-//-------------Maps-------------
+//-------------Maps in Strings-------------
 const rest = new Map();
 rest.set('name', 'Classico Italiano');
 rest.set(1, 'Firenze', 'Italy');
@@ -1320,20 +1320,20 @@ f();
 h();
 f();
 
-const boardPassengers = function (n, wait) {
-    const perGroup = n / 3;
+// const boardPassengers = function (n, wait) {
+//     const perGroup = n / 3;
 
-    setTimeout(function () {
-        console.log(`We are now boarding at ${n} passengers`);
-        console.log(`There are 3 groups,each with ${perGroup} passengers`);
-    }, wait * 1000);
-    console.log(`Will start boarding at ${wait} seconds`);
-}
-setTimeout(function () {
-    console.log('timer');
-}, 1000);
+//     setTimeout(function () {
+//         console.log(`We are now boarding at ${n} passengers`);
+//         console.log(`There are 3 groups, each with ${perGroup} passengers`);
+//     }, wait * 1000);
+//     console.log(`Will start boarding at ${wait} seconds`);
+// }
+// setTimeout(function () {
+//     console.log('timer');
+// }, 1000);
 
-boardPassengers(180, 3);
+// boardPassengers(180, 3);
 
 // ## Coding Challenge 15.
 (function () {
@@ -1346,3 +1346,204 @@ boardPassengers(180, 3);
 })();
 
 //--------Simple array methods--------
+let arr6 = ['a', 'b', 'c', 'd', 'e'];
+//-------Slice-----------
+console.log('----------Slice-------');
+console.log(arr6.slice(2));
+console.log(arr6.slice(2, 4));
+console.log(arr6.slice(-2));
+console.log(arr6.slice(1, -2));
+console.log([...arr6]);
+
+//---------splice(removes elements)-----------
+console.log('----------Splice-------');
+// console.log(arr6.splice(2));
+console.log(arr6.splice(-1));
+console.log(arr6.splice(1, 2));
+console.log(arr6);
+
+//--------reverse---------
+const arr7 = ['j', 'i', 'h', 'g', 'f'];
+console.log(arr7.reverse());
+console.log(arr7);
+
+//-------concate----------
+const letters = arr6.concat(arr7);
+console.log(letters);
+console.log([...arr6, ...arr7]);
+
+//------------join---------
+console.log(letters.join('-'));
+
+//---------at method(it also works on string)------------
+const arr8 = [23, 11, 64];
+console.log(arr8[0]);
+console.log(arr8.at(0));
+
+console.log(arr8[arr8.length - 1]);
+console.log(arr8.slice(-1)[0]);
+console.log(arr8.at(-1));
+
+console.log('jonas'.at(0));
+console.log('jonas'.at(-1));
+
+//--------for each------------------
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log('----------For of  loop----------');
+for (const movement of movements) {
+    if (movement > 0) {
+        console.log(`You deposited ${movement}`);
+    } else {
+        console.log(`You withdraw ${Math.abs(movement)}`);
+    }
+}
+
+console.log('-------forEach----------');
+movements.forEach(function (movement) {
+    if (movement > 0) {
+        console.log(`You deposited ${movement}`);
+    } else {
+        console.log(`You withdraw ${Math.abs(movement)}`);
+    }
+});
+
+//-------------------------
+console.log('----------Example: For of  loop----------');
+for (const [i, movement] of movements.entries()) {
+    if (movement > 0) {
+        console.log(`${i + 1}: You deposited ${movement}`);
+    } else {
+        console.log(`${i + 1}: You withdraw ${Math.abs(movement)}`);
+    }
+}
+
+console.log('-------Example: forEach----------');
+movements.forEach(function (movement, i) {
+    if (movement > 0) {
+        console.log(`${i + 1}: You deposited ${movement}`);
+    } else {
+        console.log(`${i + 1}: You withdraw ${Math.abs(movement)}`);
+    }
+});
+
+//---------------for each with maps and sets------------
+const currencies = new Map([
+    ['USD', 'United States Dollar'],
+    ['EUR', 'Euro'],
+    ['GBP', 'Pound sterling']
+]);
+
+currencies.forEach(function (value, key, map) {
+    console.log(`${key}:${value}`);
+})
+
+//------set-----------
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function (value, key, map) {
+    console.log(`${key}:${value}`);
+})
+
+// ## Coding Challenge 16.
+const checkDogs = function (dogsJulia, dogsKate) {
+    const dogsJuliaCorrected = dogsJulia.slice();
+    dogsJuliaCorrected.splice(0, 1);
+    dogsJuliaCorrected.splice(-2);
+
+    const dogs = dogsJuliaCorrected.concat(dogsKate);
+    console.log(dogs);
+
+    dogs.forEach(function (dog, i) {
+        if (dog >= 3) {
+            console.log(`Dog number ${i + 1} is an adult,and is ${dog} years old`);
+        } else {
+            console.log(`Dog number ${i + 1} is still a puppy`);
+        }
+    })
+}
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3])
+
+//-----------Maps in arrays----------
+const euroToUsd = 1.1;
+// const movementsUsd = movements.map(function (mov) {
+//     return mov * euroToUsd;
+// });
+
+const movementsUsd = movements.map(mov => mov * euroToUsd);//using arrow function
+console.log(movements);
+console.log(movementsUsd);
+
+//using for of
+const movementsUsdfor = [];
+for (const mov of movements) movementsUsdfor.push(mov * euroToUsd);
+console.log(movementsUsdfor);
+
+//-----------
+const movementsDescriptions = movements.map((movement, i) =>
+    `${i + 1}: You ${movement > 0 ? 'deposited' : 'withdraw'} ${Math.abs(movement)}`
+);
+console.log(movementsDescriptions);
+
+//-----------filter--------
+console.log('----------using function----------');
+const deposits = movements.filter(function (mov) {
+    return mov > 0;
+})
+console.log(movements);
+console.log(deposits);
+
+//using for of
+console.log('-----using for of--------');
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+
+//-------------reduce----------
+//accumulator->snowball
+console.log(movements);
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//     console.log(`Iteration ${i}: ${acc}`);
+//     return acc + cur;
+// }, 100);
+console.log('----------using function----------');
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+//-----using for of loop------
+console.log('-----using for of--------');
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
+
+//maximum value
+const max = movements.reduce((acc, mov) => {
+    if (acc > mov) return acc
+    else return mov;
+}, movements[0]);
+console.log('maximum value: ', max);
+
+// ## Coding Challenge 17.
+const calcAverageNumber = function (ages) {
+    const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
+    const adults = humanAges.filter(age => age >= 18);
+    console.log(humanAges);
+    console.log(adults);
+
+    // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+    // return average;
+
+    const average = adults.reduce((acc, age, arr) => acc + age / arr.length, 0) / adults.length;
+    return average;
+};
+const avg1 = calcAverageNumber([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcAverageNumber([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg1, avg2);
+
+//----------chaining methods(pipeline)--------
+const totalDepositsUSD = movements.filter(mov => mov > 0).map(mov => mov * euroToUsd).reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositsUSD);
+
+// ## Coding Challenge 18.
