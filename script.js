@@ -1527,7 +1527,7 @@ console.log('maximum value: ', max);
 
 // ## Coding Challenge 17.
 const calcAverageNumber = function (ages) {
-    const humanAges = ages.map(age => age <= 2 ? 2 * age : 16 + age * 4);
+    const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
     const adults = humanAges.filter(age => age >= 18);
     console.log(humanAges);
     console.log(adults);
@@ -1535,9 +1535,11 @@ const calcAverageNumber = function (ages) {
     // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
     // return average;
 
-    const average = adults.reduce((acc, age, arr) => acc + age / arr.length, 0) / adults.length;
+    const average = adults.reduce((acc, age, i, arr) => acc + age / arr.length, 0);
     return average;
 };
+const calcAverageNumber2 = ages => ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4)).filter(age => age >= 18).reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
 const avg1 = calcAverageNumber([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcAverageNumber([16, 6, 10, 5, 6, 1, 4]);
 console.log(avg1, avg2);
@@ -1546,4 +1548,48 @@ console.log(avg1, avg2);
 const totalDepositsUSD = movements.filter(mov => mov > 0).map(mov => mov * euroToUsd).reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositsUSD);
 
-// ## Coding Challenge 18.
+//---------find-----------------
+const firstWithdrwal = movements.find(mov => mov < 0);
+console.log(movements);
+console.log(firstWithdrwal);
+
+//--------some------
+console.log(movements.some(mov => mov === -130));
+console.log(movements.some(mov => mov > 0));
+
+//-----every----------
+console.log(movements.every(mov => mov > 0));
+
+//-----flat and flatmap--------------
+const arr9 = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr9.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+const owners = ['Jonas', 'Zach', 'Adan', 'Martha'];
+console.log(owners.sort());
+
+console.log(movements.sort((a, b) => {
+    if (a > b)
+        return 1;
+    if (b > a)
+        return -1;
+}));
+
+//-------------fill method------
+const arr10 = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+//-------------empty array + fill method------
+const v = new Array(7);
+console.log(v);
+
+console.log(v.fill(1, 3, 5));
+console.log(v.fill(1));
+console.log(arr10.fill(23, 2, 6));
+
+//------------Array.from---------
+console.log(Array.from({ length: 7 }, () => 1));
+
+console.log(Array.from({ length: 7 }, (curr, i) => i + 1));
